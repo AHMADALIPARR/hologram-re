@@ -1,0 +1,14 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/hologram-ai-quant",
+    "crates/hologram-ai-common",
+    "crates/hologram-ai-safetensors",
+    "crates/hologram-ai-tokenizer",
+    "crates/hologram-ai-regex",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-only"

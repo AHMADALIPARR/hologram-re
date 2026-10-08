@@ -1,0 +1,10 @@
+[package]
+name = "hologram-ai-tokenizer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Native BPE / Unigram / WordPiece tokenizer — no_std runtime core (extracted)"
+
+[dependencies]
+hashbrown = { version = "0.15", default-features = false, features = ["default-hasher", "inline-more"] }
+regex-automata = { version = "0.4", default-features = false, features = ["alloc", "syntax", "meta", "unicode"] }

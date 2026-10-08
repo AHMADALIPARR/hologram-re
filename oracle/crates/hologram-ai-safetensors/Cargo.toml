@@ -1,0 +1,12 @@
+[package]
+name = "hologram-ai-safetensors"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+hologram-ai-common = { path = "../hologram-ai-common" }
+safetensors = "0.4.1"
+serde       = { version = "1.0", features = ["derive"] }
+serde_json  = "1.0"
+anyhow      = "1.0"

@@ -1,0 +1,11 @@
+[package]
+name = "hologram-ai-quant"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+half     = { version = "=2.4.1", default-features = false }
+smallvec = "1"
+bytemuck = { version = "1", features = ["derive"] }
+libm     = { version = "0.2.16", default-features = false }
