@@ -1,0 +1,16 @@
+=== A_quant_layout 2026-10-07T17:07:21-07:00 (PT) ===
+q4_0 file sha256: 73b3194022f5933c0fc093174b9cf16bd6cb63782bd9ecade5198eae25cbe29b
+q8_0 file sha256: 5ddcff0dd35ab4bed6e806aa59014d0c77614bdada5bf4a5d92214c6dcfba4aa
+
+Q4_0  name  scale_bits  scale_exact  mismatches_vs_interleaved/32  mismatches_vs_ggml_split/32
+varied_scale_1	15360	1	0	27
+uniform_scale_half	14336	0.5	0	16
+negative_scale	46080	-0.25	0	28
+extreme_scale	31743	65504	0	4
+zero_scale	0	0	0	0
+
+Q8_0  name  scale_bits  scale_exact  mismatches_vs_ggml/32
+varied_scale_1	15360	1	0
+alternating_scale_half	14336	0.5	0
+extremes_scale_2	16384	2	0
+zero_scale	0	0	0

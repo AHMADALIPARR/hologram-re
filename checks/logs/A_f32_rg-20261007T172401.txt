@@ -1,0 +1,130 @@
+=== A_f32_rg 2026-10-07T17:24:01-07:00 (PT)  HEAD c9609c0
+--- matching-line counts per file
+crates/hologram-ai-common/src/ir/param.rs:3
+crates/hologram-ai-common/src/lower/quantize.rs:19
+crates/hologram-ai-common/src/opt/const_dedup.rs:1
+crates/hologram-ai-model/src/lib.rs:2
+crates/hologram-ai-onnx/src/graph_builder.rs:14
+crates/hologram-ai-onnx/src/lib.rs:3
+crates/hologram-ai-onnx/src/op_map.rs:8
+crates/hologram-ai-onnx/src/tensor_map.rs:1
+crates/hologram-ai-quant/src/encode.rs:7
+crates/hologram-ai-quant/src/q4_0.rs:8
+crates/hologram-ai-quant/src/q8_0.rs:6
+crates/hologram-ai-safetensors/src/parametric.rs:16
+crates/hologram-ai/src/compiler.rs:4
+crates/hologram-ai/src/download/mod.rs:3
+crates/hologram-ai/src/quantized.rs:9
+--- total matching lines: 104
+--- files in the list with zero matches
+crates/hologram-ai-onnx/src/dtype_map.rs
+crates/hologram-ai/src/address.rs
+crates/hologram-ai/src/materialize.rs
+crates/hologram-ai/src/staged.rs
+crates/hologram-archivum/src
+crates/hologram-ai-conformance/src/witness.rs
+--- raw lines
+crates/hologram-ai-common/src/lower/quantize.rs:1://! Compile-time weight quantization pass: rewrites MatMul f32-weight constants
+crates/hologram-ai-common/src/lower/quantize.rs:22:/// Rewrite each MatMul whose B (weight) operand is an inline f32 rank-2 constant
+crates/hologram-ai-common/src/lower/quantize.rs:79:        let wf: Vec<f32> = data
+crates/hologram-ai-common/src/lower/quantize.rs:81:            .map(|c| f32::from_le_bytes([c[0], c[1], c[2], c[3]]))
+crates/hologram-ai-common/src/lower/quantize.rs:104:        // Per-column scale constant [n] f32.
+crates/hologram-ai-common/src/lower/quantize.rs:116:        // Dequant output tensor [k, n] f32.
+crates/hologram-ai-common/src/lower/quantize.rs:132:        // Rewire MatMul B → dequant output; retire the f32 weight constant.
+crates/hologram-ai-common/src/lower/quantize.rs:152:        // inline f32 — which this baseline skips). Warn so the flag isn't a
+crates/hologram-ai-common/src/lower/quantize.rs:155:            "quantize_weights: --quantize int8 requested but no inline f32 MatMul \
+crates/hologram-ai-common/src/lower/quantize.rs:169:    /// f32 constant.
+crates/hologram-ai-common/src/lower/quantize.rs:177:        // W = f32 weight [4, 2]
+crates/hologram-ai-common/src/lower/quantize.rs:178:        let w: Vec<f32> = vec![0.1, -0.2, 0.3, -0.4, 0.5, -0.6, 0.7, -0.8];
+crates/hologram-ai-common/src/lower/quantize.rs:237:        // Scale operand is an f32 vector of length n=2.
+crates/hologram-ai-common/src/lower/quantize.rs:247:        // The MatMul's B now points at the dequant output; the old f32 const is gone.
+crates/hologram-ai-common/src/lower/quantize.rs:254:        assert!(!g.params.contains_key(&1), "old f32 weight retired");
+crates/hologram-ai-common/src/lower/quantize.rs:276:        // Build a graph with two MatMul nodes each with their own inline f32
+crates/hologram-ai-common/src/lower/quantize.rs:285:        // W1 = f32 weight [4, 2] for first MatMul
+crates/hologram-ai-common/src/lower/quantize.rs:286:        let w: Vec<f32> = vec![0.1, -0.2, 0.3, -0.4, 0.5, -0.6, 0.7, -0.8];
+crates/hologram-ai-common/src/lower/quantize.rs:295:        // W2 = separate f32 weight [4, 2] for second MatMul (tid=3)
+crates/hologram-ai-common/src/ir/param.rs:86:    /// Interpret inline data as f32 slice (for small constant params like scales).
+crates/hologram-ai-common/src/ir/param.rs:87:    /// Returns `None` for mmap params or if the data isn't aligned/sized for f32.
+crates/hologram-ai-common/src/ir/param.rs:88:    pub fn as_f32_slice(&self) -> Option<&[f32]> {
+crates/hologram-ai-onnx/src/tensor_map.rs:122:                .flat_map(|f| half::f16::from_f32(*f).to_le_bytes())
+crates/hologram-ai-onnx/src/lib.rs:37:/// Decode a standalone `TensorProto` into its `f32` values (from `raw_data` or
+crates/hologram-ai-onnx/src/lib.rs:39:pub fn decode_tensor_proto_f32(bytes: &[u8]) -> anyhow::Result<Vec<f32>> {
+crates/hologram-ai-onnx/src/lib.rs:44:            .map(|c| f32::from_le_bytes([c[0], c[1], c[2], c[3]]))
+crates/hologram-ai-onnx/src/op_map.rs:15:    pub fn attr_f(&self, name: &str) -> Option<f32> {
+crates/hologram-ai-onnx/src/op_map.rs:31:    pub fn attr_floats(&self, name: &str) -> Option<&[f32]> {
+crates/hologram-ai-onnx/src/op_map.rs:47:    pub fn attr_f_or(&self, name: &str, default: f32) -> f32 {
+crates/hologram-ai-onnx/src/op_map.rs:228:            min: f32::NEG_INFINITY,
+crates/hologram-ai-onnx/src/op_map.rs:229:            max: f32::INFINITY,
+crates/hologram-ai-onnx/src/op_map.rs:283:            let fill_value: f32 = ctx
+crates/hologram-ai-onnx/src/op_map.rs:292:                        Some(f32::from_le_bytes([
+crates/hologram-ai-onnx/src/op_map.rs:304:                fill_value: fill_value.to_bits(),
+crates/hologram-ai/src/compiler.rs:196:    /// When set to `Q4_0`, f32 MatMul weights are quantized at compile time
+crates/hologram-ai/src/compiler.rs:215:    pub patch_budget_ratio: Option<f32>,
+crates/hologram-ai/src/compiler.rs:490:        // still f32 constants, before lowering fuses Dequantize→MatMul.
+crates/hologram-ai/src/compiler.rs:1032:fn select_pipeline(ai_graph: &AiGraph, patch_budget_ratio: Option<f32>) -> OptPipeline {
+crates/hologram-ai/src/quantized.rs:7://! artifact's κ (two ranges: the i8 block and the per-channel f32 scales —
+crates/hologram-ai/src/quantized.rs:31:/// Decode wide weight bytes (`F32` or `BF16`, little-endian) to f32.
+crates/hologram-ai/src/quantized.rs:32:fn widen_to_f32(bytes: &[u8], dtype: DType, elems: usize) -> Result<Vec<f32>> {
+crates/hologram-ai/src/quantized.rs:44:                .map(|c| f32::from_le_bytes([c[0], c[1], c[2], c[3]]))
+crates/hologram-ai/src/quantized.rs:57:                .map(|c| f32::from_bits(u32::from(u16::from_le_bytes([c[0], c[1]])) << 16))
+crates/hologram-ai/src/quantized.rs:120:            .flat_map(|k| (((k % 7) as f32) * 0.3 - 1.0).to_le_bytes())
+crates/hologram-ai/src/quantized.rs:132:        let w: Vec<f32> = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+crates/hologram-ai/src/quantized.rs:140:        let s0 = f32::from_le_bytes([a[6], a[7], a[8], a[9]]);
+crates/hologram-ai/src/quantized.rs:147:        // bf16 is the top 16 bits of f32: 1.0 = 0x3F80.
+crates/hologram-ai-onnx/src/graph_builder.rs:162:        //   Inputs:  [x]            (f32)
+crates/hologram-ai-onnx/src/graph_builder.rs:237:                    let v: f32 = $value;
+crates/hologram-ai-onnx/src/graph_builder.rs:363:        // canonical AiOps: cast int operands to f32, subtract optional
+crates/hologram-ai-onnx/src/graph_builder.rs:364:        // per-row/per-column zero points (also cast), MatMul in f32,
+crates/hologram-ai-onnx/src/graph_builder.rs:365:        // then cast the product back to int32. f32 has a 24-bit
+crates/hologram-ai-onnx/src/graph_builder.rs:477:            // Cast to f32 → MatMul → Cast back to INT32 (→ output[0]).
+crates/hologram-ai-onnx/src/graph_builder.rs:1603:            // Prefer sizes (i64) over scales (f32); drop roi.
+crates/hologram-ai-onnx/src/graph_builder.rs:1606:                // Find the best param: prefer i64 (sizes) over f32 (scales).
+crates/hologram-ai-onnx/src/graph_builder.rs:1634:                    min: min_val.unwrap_or(f32::NEG_INFINITY),
+crates/hologram-ai-onnx/src/graph_builder.rs:1635:                    max: max_val.unwrap_or(f32::INFINITY),
+crates/hologram-ai-onnx/src/graph_builder.rs:1646:/// Extract a single f32 scalar from a constant parameter tensor.
+crates/hologram-ai-onnx/src/graph_builder.rs:1651:) -> Option<f32> {
+crates/hologram-ai-onnx/src/graph_builder.rs:1660:        DType::F32 if data.len() == 4 => Some(f32::from_le_bytes(data.try_into().unwrap())),
+crates/hologram-ai-onnx/src/graph_builder.rs:1661:        DType::F64 if data.len() == 8 => Some(f64::from_le_bytes(data.try_into().unwrap()) as f32),
+crates/hologram-ai-common/src/opt/const_dedup.rs:117:            saved_mb = saved_bytes as f64 / 1_048_576.0,
+crates/hologram-ai/src/download/mod.rs:269:        format!("{:.1} GB", bytes as f64 / GB as f64)
+crates/hologram-ai/src/download/mod.rs:271:        format!("{:.1} MB", bytes as f64 / MB as f64)
+crates/hologram-ai/src/download/mod.rs:273:        format!("{:.1} KB", bytes as f64 / KB as f64)
+crates/hologram-ai-quant/src/encode.rs:1://! f32 → per-channel symmetric int8 weight encoder (the inverse of the dequant
+crates/hologram-ai-quant/src/encode.rs:7:/// `no_std`-safe f32 round-half-away-from-zero via libm (`f32::round` is not in core).
+crates/hologram-ai-quant/src/encode.rs:9:fn round_f32(x: f32) -> f32 {
+crates/hologram-ai-quant/src/encode.rs:19:pub fn encode_int8_per_channel(w: &[f32], k: usize, n: usize) -> (Vec<i8>, Vec<f32>) {
+crates/hologram-ai-quant/src/encode.rs:52:        let w: Vec<f32> = (0..k * n).map(|i| (i as f32) * 0.13 - 0.7).collect();
+crates/hologram-ai-quant/src/encode.rs:58:                let deq = q[i * n + j] as f32 * scales[j];
+crates/hologram-ai-quant/src/encode.rs:98:            let deq = q[i] as f32 * scales[0];
+crates/hologram-ai-quant/src/q4_0.rs:19:/// Dequantize a single Q4_0 block to 32 f32 values.
+crates/hologram-ai-quant/src/q4_0.rs:20:pub fn dequant_q4_0_block(block: &Q4_0Block) -> [f32; 32] {
+crates/hologram-ai-quant/src/q4_0.rs:21:    let scale = half::f16::from_bits(block.scale).to_f32();
+crates/hologram-ai-quant/src/q4_0.rs:26:        out[2 * i] = lo as f32 * scale;
+crates/hologram-ai-quant/src/q4_0.rs:27:        out[2 * i + 1] = hi as f32 * scale;
+crates/hologram-ai-quant/src/q4_0.rs:32:/// Dequantize a raw Q4_0 byte slice to f32 values.
+crates/hologram-ai-quant/src/q4_0.rs:36:pub fn dequant_q4_0(data: &[u8]) -> Vec<f32> {
+crates/hologram-ai-quant/src/q4_0.rs:57:        // scale = f16::from_bits(0) = 0.0, all qs = 0x88 (nibbles all 8, so offset 0)
+crates/hologram-ai-quant/src/q8_0.rs:19:/// Dequantize a single Q8_0 block to 32 f32 values.
+crates/hologram-ai-quant/src/q8_0.rs:20:pub fn dequant_q8_0_block(block: &Q8_0Block) -> [f32; 32] {
+crates/hologram-ai-quant/src/q8_0.rs:21:    let scale = half::f16::from_bits(block.scale).to_f32();
+crates/hologram-ai-quant/src/q8_0.rs:24:        out[i] = q as f32 * scale;
+crates/hologram-ai-quant/src/q8_0.rs:29:/// Dequantize a raw Q8_0 byte slice to f32 values.
+crates/hologram-ai-quant/src/q8_0.rs:33:pub fn dequant_q8_0(data: &[u8]) -> Vec<f32> {
+crates/hologram-ai-model/src/lib.rs:73:    pub rope_theta: f64,
+crates/hologram-ai-model/src/lib.rs:74:    pub rms_norm_eps: f64,
+crates/hologram-ai-safetensors/src/parametric.rs:164:    rms_norm_eps: f32,
+crates/hologram-ai-safetensors/src/parametric.rs:165:    rope_theta: f32,
+crates/hologram-ai-safetensors/src/parametric.rs:186:fn require_f64(config: &Value, key: &str) -> Result<f64> {
+crates/hologram-ai-safetensors/src/parametric.rs:205:        let rms_norm_eps = require_f64(config, "rms_norm_eps")? as f32;
+crates/hologram-ai-safetensors/src/parametric.rs:206:        let rope_theta = require_f64(config, "rope_theta")? as f32;
+crates/hologram-ai-safetensors/src/parametric.rs:460:    let cast = builder.add_tensor(&format!("{name}.f32"), DType::F32, shape);
+crates/hologram-ai-safetensors/src/parametric.rs:496:    let cast = builder.add_tensor(&format!("{name}.f32"), DType::F32, shape);
+crates/hologram-ai-safetensors/src/parametric.rs:1628:/// (`Add`, then a norm preconditioned on the sum) whose f32 rounding differs
+crates/hologram-ai-safetensors/src/parametric.rs:2006:        let eps: Vec<f32> = graph
+crates/hologram-ai-safetensors/src/parametric.rs:2018:        let gqa: Vec<(u32, u32, u32, f32)> = graph
+crates/hologram-ai-safetensors/src/parametric.rs:2092:        let q_bias_f32 = tensor_id(&graph, "model.layers.0.self_attn.q_proj.bias.f32");
+crates/hologram-ai-safetensors/src/parametric.rs:2103:        let embed_f32 = tensor_id(&graph, "model.embed_tokens.weight.f32");
+crates/hologram-ai-safetensors/src/parametric.rs:2265:        // nothing else). The head's own `lm_head.weight.f32` is a separate,
+crates/hologram-ai-safetensors/src/parametric.rs:2271:                .any(|n| n == "model.embed_tokens.weight.f32"),
+crates/hologram-ai-safetensors/src/parametric.rs:2353:        let qkv_f32 = tensor_id(&graph, "model.layers.0.self_attn.qkv_proj.weight.f32");
+crates/hologram-ai-safetensors/src/parametric.rs:2366:        let gu_f32 = tensor_id(&graph, "model.layers.0.mlp.gate_up_proj.weight.f32");
