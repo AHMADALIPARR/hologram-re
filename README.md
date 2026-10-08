@@ -14,7 +14,9 @@ and in WebAssembly, gates requests through a policy check, and logs runs to a
 hash-chained ledger. Nothing from upstream is copied here; this repository holds
 only analysis.
 
-**Status: work in progress.** Files are added as the analysis lands.
+**Status: work in progress.** Team A catalog and Team B function notes are in
+`functions/`. Team B Alloy models are in `alloy/B_*.als`; they have not been
+re-run in the commit that added the B notes. See [`HANDOFF.md`](HANDOFF.md).
 
 ## Method
 
