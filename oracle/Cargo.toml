@@ -6,6 +6,7 @@ members = [
     "crates/hologram-ai-safetensors",
     "crates/hologram-ai-tokenizer",
     "crates/hologram-ai-regex",
+    "crates/hologram-ai-kappahasher",
 ]
 
 [workspace.package]

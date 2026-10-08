@@ -29,6 +29,11 @@ bit-exactly.
   `no_std`.
 - `crates/hologram-ai-regex` — standalone regex pre-tokenizer
   (`RegexSplitter`, verbatim `split_fragments` logic). Example: `split` CLI.
+- `crates/hologram-ai-kappahasher` — standalone streaming κ-hasher
+  (`KappaHasher`: `new`/`update`/`finalize`), extracted from the wasm
+  browser pipeline. Replays the browser's network-slice feeding pattern to
+  differentially test the catalog's `chunked_kappa` claim
+  (`functions/A_addressing.md` AD-03, currently Asserted-only).
 
 ## WebAssembly
 

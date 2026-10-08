@@ -1,0 +1,10 @@
+[package]
+name = "hologram-ai-kappahasher"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+# Pinned to the exact blake3 the product locks (hologram-ai Cargo.lock):
+# the oracle must hash with the same algorithm version it second-guesses.
+blake3 = "=1.5.5"
