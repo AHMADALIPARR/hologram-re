@@ -3,6 +3,12 @@
 
 Pinned upstream: `SNAPKITTYAGENT9NOVA/hologram-ai` @ `c9609c0`. Nothing from upstream is copied here.
 
+## v1 drop
+
+- `oracle/` is the executable oracle (five crates, WAT dequant). Provenance is in `oracle/README.md`. Do not treat it as a vendored copy of upstream.
+- `assets/pipeline-walkthrough.mp4` is the five-stage card. Scored in the README. The card's "enforced constraints" are not verdicts.
+- Release tag `v1.0.0` points at the commit that added the README and the clip.
+
 ## Landed
 
 - Team A function catalog: `functions/A_*.md` (addressing through f32 inventory).
