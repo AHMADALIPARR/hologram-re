@@ -1,3 +1,5 @@
 *.tmp
 alloy/out/
 target/
+node_modules/
+dist/
